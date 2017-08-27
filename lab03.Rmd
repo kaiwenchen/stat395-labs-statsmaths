@@ -13,16 +13,15 @@ them) and then loads a dataset of interest. Your goal is to
 predict the value of the third column (which will be missing
 on the test set) using the techniques we have learned so far.
 In this case, please restrict yourself to linear regressions,
-though you may now use multivariate models. Also, please only
-use the training set for fitting models.
+though you may now use multivariate models. 
 
 The lab should be written as short code snippets with surrounding
 text. The text should be in full sentences and should fully describe
 what and why you are running the code you are running.  When there
 are results, you should also give a sentence or two describing them.
 
-Make sure to include at a minimum several plots and showing how well
-your final models performs on the validation set.
+Make sure to include at a minimum several plots and justify why
+are picked the final model you are using.
 
 You may not share code with other students prior to the submission
 of each lab. However, discussing the labs amongst other students
