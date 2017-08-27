@@ -47,12 +47,21 @@ And to load the abalone dataset:
 abalone <- read_csv("https://statsmaths.github.io/ml_data/abalone.csv")
 ```
 
-The remainder of your report should go below:
+An abalone is a particular type of shellfish; I find it rather
+funny looking:
+
+![](https://statsmaths.github.io/stat395/assets/img/abalone.jpg)
+
+Your goal is to use physical characterists from a set of abalone
+to predict the shellfish's age.
+
+Your code and text should go in the section below (feel free to create
+sub-sections with the `###` command at the start of line, though please
+note that this is not required):
 
 ## Lab 02
 
 THIS IS WHERE YOUR CODE AND TEXT SHOULD GO (and please remove this line!)
-
 
 
 
