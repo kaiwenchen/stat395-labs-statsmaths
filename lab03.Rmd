@@ -12,8 +12,8 @@ libraries (if some are new, there will also be code to install
 them) and then loads a dataset of interest. Your goal is to
 predict the value of the third column (which will be missing
 on the test set) using the techniques we have learned so far.
-In this case, please restrict yourself to univariate linear
-regressions. 
+In this case, please restrict yourself to linear regressions,
+though you may now use multivariate models.
 
 The lab should be written as short code snippets with surrounding
 text. The text should be in full sentences and should fully describe
