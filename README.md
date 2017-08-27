@@ -1,6 +1,6 @@
 # Statistics 395: Lab Files
 
-![](https://img.shields.io/badge/Completion-0/24-red.svg)
+![](https://img.shields.io/badge/Completion-0/28-red.svg)
 
 This repository is where you will find starter code for your daily labs
 and is a place to put your completed lab files. Note that these labs
@@ -47,7 +47,3 @@ and do so manually.
 7. There should already be a `lab02.Rmd` for you to work on for the
 next class. New labs will show up automatically as we proceed through
 the semester.
-
-
-
-
