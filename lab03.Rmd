@@ -50,9 +50,9 @@ And to load the mpg dataset:
 mpg <- read_csv("https://statsmaths.github.io/ml_data/mpg.csv")
 ```
 
-The dataset gives characterists of various automobiles.
-Your goal is to use characterists of the cars to estimate
-their city fuel efficency.
+The dataset gives characteristics of various automobiles.
+Your goal is to use characteristics of the cars to estimate
+their city fuel efficiency.
 
 Your code and text should go in the section below (feel free to create
 sub-sections with the `###` command at the start of line, though please
