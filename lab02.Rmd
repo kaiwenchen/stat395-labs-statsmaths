@@ -20,8 +20,8 @@ text. The text should be in full sentences and should fully describe
 what and why you are running the code you are running.  When there
 are results, you should also give a sentence or two describing them.
 
-Make sure to include at a minimum several plots and showing how well
-your final models performs on the validation set.
+Make sure to include at a minimum several plots and argue for why
+you choice your final model.
 
 You may not share code with other students prior to the submission
 of each lab. However, discussing the labs amongst other students
