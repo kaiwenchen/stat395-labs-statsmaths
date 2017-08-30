@@ -44,15 +44,14 @@ library(ggplot2)
 library(viridis)
 ```
 
-And to load the mpg dataset:
+And to load the wine dataset:
 
 ```{r}
-mpg <- read_csv("https://statsmaths.github.io/ml_data/mpg.csv")
+wine <- read_csv("https://statsmaths.github.io/ml_data/wine.csv")
 ```
 
-The dataset gives characteristics of various automobiles.
-Your goal is to use characteristics of the cars to estimate
-their city fuel efficiency.
+The dataset gives characteristics of various types of wine.
+Your goal is to use these to estimate the quality of the wine.
 
 Your code and text should go in the section below (feel free to create
 sub-sections with the `###` command at the start of line, though please
