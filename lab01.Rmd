@@ -45,6 +45,19 @@ if (!require("viridis")) {
 }
 ```
 
+## RStudio settings
+
+There are some default settings that will be useful to tweak before moving
+forward. If you don't do this, R will save datasets between sessions. After
+a week or two it will start to slow down and eventually crash everything
+you open the application. Instead, follow these simple steps:
+
+1. In the RStudio menu click on `Tools > Global Options...`
+2. Look for the first drop-down: `Save the workspace to .RData on exit`
+3. Change this first drop-down to `Never`
+4. All of the check-boxes above this dropdown should be unchecked.
+
+
 ## Read in mammal sleep data
 
 Now, load the libraries from above. **If this gives a warning,
