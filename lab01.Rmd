@@ -1,7 +1,9 @@
 ---
 title: "Lab 01"
-author: ""
-output: html_notebook
+author: ''
+output:
+  html_document: default
+  html_notebook: default
 ---
 
 This lab serves to verify that you have set-up R correctly, install
