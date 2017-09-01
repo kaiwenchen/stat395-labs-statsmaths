@@ -1,6 +1,6 @@
 # Statistics 395: Lab Files
 
-![](https://img.shields.io/badge/Completion-0/28-red.svg)
+![](https://img.shields.io/badge/Completion-1/38-orange.svg)
 
 This repository is where you will find starter code for your daily labs
 and is a place to put your completed lab files. Note that these labs

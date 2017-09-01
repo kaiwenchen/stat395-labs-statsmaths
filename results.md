@@ -1,6 +1,6 @@
 ## Labs 01-08
 
-![](https://img.shields.io/badge/Lab01-NA-lightgrey.svg)
+![](https://img.shields.io/badge/Lab01-[rmse]_3.83-brightgreen.svg)
 ![](https://img.shields.io/badge/Lab02-NA-lightgrey.svg)
 ![](https://img.shields.io/badge/Lab03-NA-lightgrey.svg)
 ![](https://img.shields.io/badge/Lab04-NA-lightgrey.svg)
