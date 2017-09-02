@@ -12,7 +12,7 @@ the required tasks and how well you describe your approach.
 (noon on Tuesdays and Thursdays). You should receive your prediction
 accuracy in the file `grades.md` by the start of class. Three time
 throughout the semester, I will give batch feedback and a letter grade
-for labs in that third of the course. 
+for labs in that third of the course.
 
 **Note:** Most datasets we look at are publicly available. It is strictly
 forbidden to try to access these in order to make your predictions.
@@ -22,7 +22,7 @@ external references for how to approach a specific problem. You may
 also try to tweak parameters to various models that we have not yet
 discussed. If in doubt, please contact me before submitting something.
 
-We will cover this interactively in class, but here are the steps 
+We will cover this interactively in class, but here are the steps
 for completing labs for future reference:
 
 1. I will send a link to your e-mail that you should follow
