@@ -1,7 +1,9 @@
 ---
 title: "Lab 02"
-author: ""
-output: html_notebook
+author: ''
+output:
+  html_document: default
+  html_notebook: default
 ---
 
 ## Instructions
@@ -13,7 +15,7 @@ them) and then loads a dataset of interest. Your goal is to
 predict the value of the third column (which will be missing
 on the test set) using the techniques we have learned so far.
 In this case, please restrict yourself to univariate linear
-regressions. 
+regressions.
 
 The lab should be written as short code snippets with surrounding
 text. The text should be in full sentences and should fully describe
@@ -25,7 +27,7 @@ you chose your final model.
 
 You may not share code with other students prior to the submission
 of each lab. However, discussing the labs amongst other students
-is allowed. Also, copying and pasting my code from class or 
+is allowed. Also, copying and pasting my code from class or
 prior submissions you made is **not** considered plagiarism and
 is in fact highly encouraged. With permission, I may occasionally
 post student-solutions to past labs. These are also fair game
@@ -64,15 +66,44 @@ note that this is not required):
 
 ## Lab 02
 
-THIS IS WHERE YOUR CODE AND TEXT SHOULD GO (and please remove this line!)
+The goal here is to predict the age variable. We see that this variable
+is roughly normally distributed with a mode around 10 years:
 
+```{r}
+qplot(age, data = abalone)
+```
 
+Looking at a number of variables, it visually appears that the `sheel_weight`
+variable is the most predictive. That is, points deviate from the line the
+least:
+
+```{r}
+qplot(sheel_weight, age, data = abalone) +
+  geom_smooth(method = "lm")
+```
+
+(NOTE: Usually, I would use some proper validation techniques to evaluate this
+model, but for now a visual argument is fine. Also, I may be wrong about
+which variable looks the most predictive; it is just a feeling after looking
+at a few plots. Other choices are not necessarily wrong.)
+
+As we only know how to do univariate models at this point, I will just
+fit a univariate model using `sheel_weight` to predict age.
+
+```{r}
+model <- lm(age ~ sheel_weight, data = abalone)
+abalone$age_pred <- predict(model, newdata = abalone)
+```
+
+Usually I would finish by showing the RMSE of my prediction on the training
+set, but as mentioned above we haven't covered that yet so there is not much
+more to say.
 
 
 ## Submission
 
 The code below assumes that you have adding a prediction named
-`age_pred` to every row of the `abalone` dataset. 
+`age_pred` to every row of the `abalone` dataset.
 
 ```{r}
 submit <- select(abalone, obs_id, age_pred)
