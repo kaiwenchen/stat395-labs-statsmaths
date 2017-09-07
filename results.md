@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/badge/Lab01-[rmse]_3.83-brightgreen.svg)
 ![](https://img.shields.io/badge/Lab02-[rmse]_2.52-yellowgreen.svg)
-![](https://img.shields.io/badge/Lab03-[rmse]_0.74-brightgreen.svg)
+![](https://img.shields.io/badge/Lab03-[rmse]_0.7389-brightgreen.svg)
 ![](https://img.shields.io/badge/Lab04-NA-lightgrey.svg)
 ![](https://img.shields.io/badge/Lab05-NA-lightgrey.svg)
 ![](https://img.shields.io/badge/Lab06-NA-lightgrey.svg)
