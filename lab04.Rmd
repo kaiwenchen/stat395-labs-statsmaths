@@ -1,0 +1,102 @@
+---
+title: "Lab 04"
+author: ''
+output:
+  html_document: default
+  html_notebook: default
+---
+
+
+*The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far. In this case, please restrict yourself
+to multivariate linear regressions.*
+
+# Set up
+
+Read in the following libraries and to load the diamonds dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+diamonds <- read_csv("https://statsmaths.github.io/ml_data/diamonds.csv")
+```
+
+The dataset gives characteristics of various types of diamonds.
+Your goal is to use these to estimate the price of each diamond.
+
+# Lab 04
+
+As before, I will start by fitting a linear model on all of the 
+variables. However, I will now restrict myself to only training
+on the training set (and not the validation set):
+
+```{r}
+model <- lm(price ~ carat + cut + color + clarity + depth +
+                    table + x + y + z, data = diamonds,
+                    subset = train_id == "train")
+diamonds$price_pred <- predict(model, newdata = diamonds)
+```
+
+Let's check how predictive this model is:
+
+```{r}
+sqrt(tapply((diamonds$price - diamonds$price_pred)^2, diamonds$train_id, mean))
+```
+
+Wow! This is incredibly overfit. Looking into this further, it
+seems that the problem is a very high correlation between the
+variables `x`, `y` and `z` (the dimensions of the diamond) and
+its weight and depth. Playing around with the model a bit, I
+found that it was best to use the "four C's" and the x variable
+for a model without any interactions:
+
+```{r}
+model <- lm(price ~ carat + cut + color + clarity + x, data = diamonds,
+                    subset = train_id == "train")
+diamonds$price_pred <- predict(model, newdata = diamonds)
+sqrt(tapply((diamonds$price - diamonds$price_pred)^2, diamonds$train_id, mean))
+```
+
+Iteractions seem like they should be important. Here I added an
+interaction between carat and all of the other variables. 
+
+```{r}
+model <- lm(price ~ carat*cut + carat*color + carat*clarity + carat*x, data = diamonds,
+                    subset = train_id == "train")
+diamonds$price_pred <- predict(model, newdata = diamonds)
+sqrt(tapply((diamonds$price - diamonds$price_pred)^2, diamonds$train_id, mean))
+```
+
+The model is greatly improved, though as you can see the model is
+starting to overfit (the training set RMSE decreased much faster
+than the validation RMSE). I will finish by using my shrinkage
+trick again:
+
+```{r}
+mean_price <- mean(diamonds$price[diamonds$train_id == "train"], na.rm=TRUE)
+diamonds$price_pred <- diamonds$price_pred * 0.98 + mean_price * 0.02
+sqrt(tapply((diamonds$price - diamonds$price_pred)^2, diamonds$train_id, mean))
+```
+
+Here, because I have a validation set, I could tweak the exact amount to
+shrink by. Through trial and error a 0.98/0.02 seemed to produce the best
+validation error. As we can see here, it does improve the RMSE slightly.
+
+# Submission
+
+The code below assumes that you have adding a prediction named
+`price_pred` to every row of the dataset.
+
+```{r}
+submit <- select(diamonds, obs_id, price_pred)
+write_csv(submit, "class04_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

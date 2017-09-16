@@ -1,0 +1,117 @@
+---
+title: "Lab 05"
+author: ''
+output:
+  html_document: default
+  html_notebook: default
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the diamonds dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+ca <- read_csv("https://statsmaths.github.io/ml_data/ca_house_price.csv")
+```
+
+Notice that the test set here is not a random subset of the data but
+has very different properties that than the other variables.
+
+# Lab 05
+
+The `gam` model using the lowess smoother with the spatial variables
+works very well in my notes. I ran a model with the lowess smoother
+on mean and median income and that worked even better. The obvious
+thing to try then is to use both of these in the same additive model:
+
+```{r, message = FALSE, warning = FALSE}
+library(gam)
+model <- gam(median_house_value ~ lo(longitude, latitude) +
+               lo(mean_household_income, median_household_income),
+             data = ca,
+             subset = (train_id == "train"))
+ca$price_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$price_pred)^2,
+            ca$train_id, mean))
+```
+
+There are some warnings about numerical issues, but the results still
+looks excellent compared to our other models. 
+
+I played around with other two-way interactions but did not find anything
+particularly interesting. I settled on adding univariate smoothing of a
+few variables that seemed interesting (mostly based on thinking about the
+data rather than empirical findings). I also created a vacant percentage
+variable:
+
+```{r, message = FALSE, warning = FALSE}
+library(gam)
+ca$vacant_percent <- ca$vacant_units / ca$total_units
+model <- gam(median_house_value ~ lo(longitude, latitude) +
+               lo(mean_household_income, median_household_income) +
+               s(median_rooms) + s(population) + s(built_2005_or_later) +
+               s(mean_household_size_owners) + s(mean_household_size_renters) +
+               s(owners) + s(vacant_percent),
+             data = ca,
+             subset = (train_id == "train"))
+ca$price_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$price_pred)^2,
+            ca$train_id, mean))
+```
+
+Much better! It doesn't appear that the model is overfitting too much
+yet, but it is starting to show a faster decrease in RMSE in the training
+set relative to the validation set. As a final tweak, I played around with
+the span arguments of the spatial and income components:
+
+```{r, message = FALSE, warning = FALSE}
+library(gam)
+ca$vacant_percent <- ca$vacant_units / ca$total_units
+model <- gam(median_house_value ~ lo(longitude, latitude, span = 0.02) +
+               lo(mean_household_income, median_household_income) +
+               s(median_rooms) + s(population) + s(built_2005_or_later) +
+               s(mean_household_size_owners) + s(mean_household_size_renters) +
+               s(owners) + s(vacant_percent),
+             data = ca,
+             subset = (train_id == "train"))
+ca$price_pred <- predict(model, newdata = ca)
+sqrt(tapply((ca$median_house_value - ca$price_pred)^2,
+            ca$train_id, mean))
+```
+
+Its possible to plot the `gam` model using the `plot`
+function:
+
+```{r, warning = FALSE}
+plot(model)
+```
+
+The default is 0.5; setting it lower makes the model *more local*. I thought
+that making the spatial component smaller would help, and it certainly does.
+I set the final value of 0.02 by tweaking it and watching the validation error
+jump around. The income span is not nearly as important to the predictive
+power of the  model so I eventually left it to the default.
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`price_pred` to every row of the dataset.
+
+```{r}
+submit <- select(ca, obs_id, price_pred)
+write_csv(submit, "class05_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
