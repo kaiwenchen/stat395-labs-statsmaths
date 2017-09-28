@@ -1,0 +1,152 @@
+---
+title: "Lab 07"
+author: ''
+output:
+  html_document: default
+  html_notebook: default
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the diamonds dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+nba <- read_csv("https://statsmaths.github.io/ml_data/nba_shots.csv")
+```
+
+Make sure that your predictions are either `0` or `1`. Here are
+some packages you might need:
+
+```{r}
+if (!require("e1071")) {
+  install.packages("e1071")
+}
+```
+
+# Lab 07
+
+A basic logistic additive model. I converted period to a factor
+(it has only four categories and the effects of each are probably
+quite different); it made sense to interact information about the
+closest defending and the shooter's height; all other continuous
+terms were put into smoothers. I tried smoothing the three terms
+in poly together but the model was taking to long to converge.
+
+```{r}
+library(gam)
+model <- gam(fgm ~ factor(period) +
+               s(shot_clock) +
+               s(dribbles) +
+               s(touch_time) +
+               s(shot_dist) +
+               pts_type +
+               poly(close_def_dist, shooter_height, defender_height, degree = 3),
+             subset = (train_id == "train"),
+             data = nba,
+             family = binomial)
+nba$fgm_pred <- as.numeric(predict(model, newdata = nba, type = "response") > 0.5)
+tapply(nba$fgm_pred == nba$fgm, nba$train_id, mean)
+```
+
+I would like to also put information in about the individual
+players. Putting them all in the model is tricky (to many overall
+players). There are two approachs that seem reasonable. I could
+either make a meta model with just player in it:
+
+```{r}
+model <- glm(fgm ~ player_name,
+             subset = (train_id == "train"),
+             data = nba)
+nba$player_percent <- predict(model, newdata = nba, type = "response")
+```
+
+This often works well, but in this case it overfits to
+the data:
+
+```{r}
+model <- gam(fgm ~ factor(period) +
+               s(shot_clock) +
+               s(dribbles) +
+               s(touch_time) +
+               s(shot_dist) +
+               pts_type +
+               poly(close_def_dist, shooter_height, defender_height, degree = 3) +
+               player_percent,
+             subset = (train_id == "train"),
+             data = nba,
+             family = binomial)
+nba$fgm_pred <- as.numeric(predict(model, newdata = nba, type = "response") > 0.5)
+tapply(nba$fgm_pred == nba$fgm, nba$train_id, mean)
+```
+
+Lumping categories together is slightly better, but still
+not an improvement on the non-player version:
+
+```{r}
+library(forcats)
+model <- gam(fgm ~ factor(period) +
+               s(shot_clock) +
+               s(dribbles) +
+               s(touch_time) +
+               s(shot_dist) +
+               pts_type +
+               poly(close_def_dist, shooter_height, defender_height, degree = 3) +
+               fct_lump(factor(player_percent), n = 5),
+             subset = (train_id == "train"),
+             data = nba,
+             family = binomial)
+nba$fgm_pred <- as.numeric(predict(model, newdata = nba, type = "response") > 0.5)
+tapply(nba$fgm_pred == nba$fgm, nba$train_id, mean)
+```
+
+Finally, what if we blend the two models together:
+
+```{r}
+model <- gam(fgm ~ factor(period) +
+               s(shot_clock) +
+               s(dribbles) +
+               s(touch_time) +
+               s(shot_dist) +
+               pts_type +
+               poly(close_def_dist, shooter_height, defender_height, degree = 3),
+             subset = (train_id == "train"),
+             data = nba,
+             family = binomial)
+nba$fgm_pred <- predict(model, newdata = nba, type = "response")
+nba$fgm_pred <- nba$fgm_pred * 0.99 + nba$player_percent * 0.01
+nba$fgm_pred <- as.numeric(nba$fgm_pred > 0.5)
+tapply(nba$fgm_pred == nba$fgm, nba$train_id, mean)
+```
+
+That seems to be the best model I can get.
+
+```{r}
+model <- glm(fgm ~ period + shot_clock + dribbles + touch_time +
+              shot_dist + pts_type + close_def_dist + 
+               shooter_height + defender_height, data = nba, subset = (train_id == "train"),
+             family = binomial(link = "probit"))
+```
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`fgm_pred` to every row of the dataset.
+
+```{r}
+submit <- select(nba, obs_id, fgm_pred)
+write_csv(submit, "class07_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.

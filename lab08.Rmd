@@ -1,0 +1,156 @@
+---
+title: "Lab 08"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the crimes dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+crimes <- read_csv("https://statsmaths.github.io/ml_data/chi_crimes_5.csv")
+crimes <- read_csv("~/gh/ml_data/chi_crimes_5.csv")
+```
+
+The names of the crimes are, in order:
+
+```{r}
+c("criminal_damage", "narcotics", "prostitution", "robbery", "theft")
+```
+
+Make sure that your predictions are either `1`, `2`, `3`, `4` or `5`.
+Here are some packages you might need:
+
+```{r}
+if (!require("nnet")) {
+  install.packages("nnet")
+}
+```
+
+```{r}
+if (!require("FNN")) {
+  install.packages("FNN")
+}
+```
+
+# Lab 08
+
+### Multinomial classification
+
+I know that there are too many groups of the location variable
+to consider all of them at once, so I'll lump them together into
+the top
+
+```{r}
+crimes$location_grp <- forcats::fct_lump(factor(crimes$location), n = 20)
+```
+
+Now, I'll fit a multinomial model on all of the data:
+
+```{r}
+library(nnet)
+model <- multinom(crime_type ~ factor(year) + factor(hour) + factor(month) +
+                    location_grp + poly(longitude, latitude, degree = 4),
+                  data = crimes,
+                  subset = (crimes$train_id == "train"))
+crimes$crime_type_pred <- predict(model, newdata = crimes)
+tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean)
+table(y = crimes$crime_type, pred = crimes$crime_type_pred)
+```
+
+Currently, I am classifying just under half of the crimes correctly.
+
+### knn regression
+
+Now, what if I use the same data to fit a local model? I won't include
+polynomial terms and will treat everything other than location group
+as a numeric variable:
+
+```{r}
+X <- model.matrix(~ -1 + year + hour + month +
+                    location_grp + longitude + latitude,
+                  data = crimes)
+X <- scale(X)
+y <- crimes$crime_type
+X_train <- X[crimes$train_id == "train",]
+y_train <- y[crimes$train_id == "train"]
+```
+
+And then try a few different values of k in the knn model:
+
+```{r}
+library(FNN)
+for (k in c(10, 50, 100)) {
+  crimes$crime_type_pred <- knn(X_train, X, cl = y_train, k = k)
+  print(tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean))
+}
+```
+
+This is not quite as good as the global model, but likely
+gives some useful information about the output that the
+global one does not.
+
+### Blending predictions
+
+Finally, I'll try to blend these models together. This is
+slightly harder than in regression or binary classification
+case. First, we store the multinomial classifications:
+
+```{r}
+model <- multinom(crime_type ~ factor(year) + factor(hour) + factor(month) +
+                    location_grp + poly(longitude, latitude, degree = 4),
+                  data = crimes,
+                  subset = (crimes$train_id == "train"))
+crimes$multinomial_pred <- predict(model, newdata = crimes)
+```
+
+The knn prediction will only yield the probabilities for the
+highest class:
+
+```{r}
+X <- model.matrix(~ -1 + year + hour + month +
+                    location_grp + longitude + latitude,
+                  data = crimes)
+X <- scale(X)
+y <- crimes$crime_type
+X_train <- X[crimes$train_id == "train",]
+y_train <- y[crimes$train_id == "train"]
+
+knn_pred <- knn(X_train, X, cl = y_train, k = 50, prob = TRUE)
+prob <- attributes(knn_pred)$prob
+```
+
+Now, I'll switch to the knn prediction when it is very high:
+
+```{r}
+crimes$crime_type_pred <- crimes$multinomial_pred
+crimes$crime_type_pred[prob > 0.4] <- knn_pred[prob > 0.4]
+tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean)
+```
+
+This is improves only
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`crime_type_pred` to every row of the dataset.
+
+```{r}
+submit <- select(crimes, obs_id, crime_type_pred)
+write_csv(submit, "class08_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
