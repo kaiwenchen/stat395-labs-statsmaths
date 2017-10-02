@@ -3,11 +3,11 @@
 ![](https://img.shields.io/badge/Lab01-[rmse]_3.8347-brightgreen.svg)
 ![](https://img.shields.io/badge/Lab02-[rmse]_2.5180-yellowgreen.svg)
 ![](https://img.shields.io/badge/Lab03-[rmse]_0.7389-brightgreen.svg)
-![](https://img.shields.io/badge/Lab04-NA-lightgrey.svg)
-![](https://img.shields.io/badge/Lab05-NA-lightgrey.svg)
-![](https://img.shields.io/badge/Lab06-NA-lightgrey.svg)
-![](https://img.shields.io/badge/Lab07-NA-lightgrey.svg)
-![](https://img.shields.io/badge/Lab08-NA-lightgrey.svg)
+![](https://img.shields.io/badge/Lab04-[rmse]_515.5956-brightgreen.svg)
+![](https://img.shields.io/badge/Lab05-[rmse]_78068.049262-brightgreen.svg)
+![](https://img.shields.io/badge/Lab06-[gain]_0.571546-brightgreen.svg)
+![](https://img.shields.io/badge/Lab07-[acc]_0.592750-brightgreen.svg)
+![](https://img.shields.io/badge/Lab08-[acc]_0.482500-green.svg)
 
 ## Labs 09-16
 

@@ -178,33 +178,35 @@ $(document).ready(function () {
 <p>Read in the following libraries and to load the crimes dataset:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZWFkcilcbmxpYnJhcnkoZHBseXIpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkocmVhZHIpIiwibGlicmFyeShkcGx5cikiXX0= -->
 <pre class="r"><code>library(readr)
 library(dplyr)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<!-- rnb-message-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTogJ2RwbHlyJ1xuIn0= -->
 <pre><code>
-Attaching package: ‘dplyr’
+Attaching package: 'dplyr'</code></pre>
+<!-- rnb-message-end -->
+<!-- rnb-message-begin eyJkYXRhIjoiVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSAncGFja2FnZTpzdGF0cyc6XG5cbiAgICBmaWx0ZXIsIGxhZ1xuIn0= -->
+<pre><code>The following objects are masked from 'package:stats':
 
-The following objects are masked from ‘package:stats’:
-
-    filter, lag
-
-The following objects are masked from ‘package:base’:
+    filter, lag</code></pre>
+<!-- rnb-message-end -->
+<!-- rnb-message-begin eyJkYXRhIjoiVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSAncGFja2FnZTpiYXNlJzpcblxuICAgIGludGVyc2VjdCwgc2V0ZGlmZiwgc2V0ZXF1YWwsIHVuaW9uXG4ifQ== -->
+<pre><code>The following objects are masked from 'package:base':
 
     intersect, setdiff, setequal, union</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeSh2aXJpZGlzKVxuYGBgIn0= -->
+<!-- rnb-message-end -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkoZ2dwbG90MikiLCJsaWJyYXJ5KHZpcmlkaXMpIl19 -->
 <pre class="r"><code>library(ggplot2)
 library(viridis)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB2aXJpZGlzTGl0ZVxuIn0= -->
+<!-- rnb-message-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiB2aXJpZGlzTGl0ZVxuIn0= -->
 <pre><code>Loading required package: viridisLite</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JpbWVzIDwtIHJlYWRfY3N2KFwiaHR0cHM6Ly9zdGF0c21hdGhzLmdpdGh1Yi5pby9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3ZcIilcbmBgYCJ9 -->
+<!-- rnb-message-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiY3JpbWVzIDwtIHJlYWRfY3N2KFwiaHR0cHM6Ly9zdGF0c21hdGhzLmdpdGh1Yi5pby9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3ZcIikifQ== -->
 <pre class="r"><code>crimes &lt;- read_csv(&quot;https://statsmaths.github.io/ml_data/chi_crimes_5.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBvYnNfaWQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHRyYWluX2lkID0gY29sX2NoYXJhY3RlcigpLFxuICBjcmltZV90eXBlID0gY29sX2ludGVnZXIoKSxcbiAgeWVhciA9IGNvbF9pbnRlZ2VyKCksXG4gIG1vbnRoID0gY29sX2ludGVnZXIoKSxcbiAgZGF5ID0gY29sX2ludGVnZXIoKSxcbiAgaG91ciA9IGNvbF9pbnRlZ2VyKCksXG4gIGxvY2F0aW9uID0gY29sX2NoYXJhY3RlcigpLFxuICBsYXRpdHVkZSA9IGNvbF9kb3VibGUoKSxcbiAgbG9uZ2l0dWRlID0gY29sX2RvdWJsZSgpXG4pXG4ifQ== -->
+<!-- rnb-message-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBvYnNfaWQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHRyYWluX2lkID0gY29sX2NoYXJhY3RlcigpLFxuICBjcmltZV90eXBlID0gY29sX2ludGVnZXIoKSxcbiAgeWVhciA9IGNvbF9pbnRlZ2VyKCksXG4gIG1vbnRoID0gY29sX2ludGVnZXIoKSxcbiAgZGF5ID0gY29sX2ludGVnZXIoKSxcbiAgaG91ciA9IGNvbF9pbnRlZ2VyKCksXG4gIGxvY2F0aW9uID0gY29sX2NoYXJhY3RlcigpLFxuICBsYXRpdHVkZSA9IGNvbF9kb3VibGUoKSxcbiAgbG9uZ2l0dWRlID0gY29sX2RvdWJsZSgpXG4pXG4ifQ== -->
 <pre><code>Parsed with column specification:
 cols(
   obs_id = col_character(),
@@ -218,11 +220,11 @@ cols(
   latitude = col_double(),
   longitude = col_double()
 )</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JpbWVzIDwtIHJlYWRfY3N2KFwifi9naC9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3ZcIilcbmBgYCJ9 -->
+<!-- rnb-message-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiY3JpbWVzIDwtIHJlYWRfY3N2KFwifi9naC9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3ZcIikifQ== -->
 <pre class="r"><code>crimes &lt;- read_csv(&quot;~/gh/ml_data/chi_crimes_5.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBvYnNfaWQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHRyYWluX2lkID0gY29sX2NoYXJhY3RlcigpLFxuICBjcmltZV90eXBlID0gY29sX2ludGVnZXIoKSxcbiAgeWVhciA9IGNvbF9pbnRlZ2VyKCksXG4gIG1vbnRoID0gY29sX2ludGVnZXIoKSxcbiAgZGF5ID0gY29sX2ludGVnZXIoKSxcbiAgaG91ciA9IGNvbF9pbnRlZ2VyKCksXG4gIGxvY2F0aW9uID0gY29sX2NoYXJhY3RlcigpLFxuICBsYXRpdHVkZSA9IGNvbF9kb3VibGUoKSxcbiAgbG9uZ2l0dWRlID0gY29sX2RvdWJsZSgpXG4pXG4ifQ== -->
+<!-- rnb-message-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBvYnNfaWQgPSBjb2xfY2hhcmFjdGVyKCksXG4gIHRyYWluX2lkID0gY29sX2NoYXJhY3RlcigpLFxuICBjcmltZV90eXBlID0gY29sX2ludGVnZXIoKSxcbiAgeWVhciA9IGNvbF9pbnRlZ2VyKCksXG4gIG1vbnRoID0gY29sX2ludGVnZXIoKSxcbiAgZGF5ID0gY29sX2ludGVnZXIoKSxcbiAgaG91ciA9IGNvbF9pbnRlZ2VyKCksXG4gIGxvY2F0aW9uID0gY29sX2NoYXJhY3RlcigpLFxuICBsYXRpdHVkZSA9IGNvbF9kb3VibGUoKSxcbiAgbG9uZ2l0dWRlID0gY29sX2RvdWJsZSgpXG4pXG4ifQ== -->
 <pre><code>Parsed with column specification:
 cols(
   obs_id = col_character(),
@@ -236,44 +238,55 @@ cols(
   latitude = col_double(),
   longitude = col_double()
 )</code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-message-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>The names of the crimes are, in order:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYyhcImNyaW1pbmFsX2RhbWFnZVwiLCBcIm5hcmNvdGljc1wiLCBcInByb3N0aXR1dGlvblwiLCBcInJvYmJlcnlcIiwgXCJ0aGVmdFwiKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYyhcImNyaW1pbmFsX2RhbWFnZVwiLCBcIm5hcmNvdGljc1wiLCBcInByb3N0aXR1dGlvblwiLCBcInJvYmJlcnlcIiwgXCJ0aGVmdFwiKSJ9 -->
 <pre class="r"><code>c(&quot;criminal_damage&quot;, &quot;narcotics&quot;, &quot;prostitution&quot;, &quot;robbery&quot;, &quot;theft&quot;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiY3JpbWluYWxfZGFtYWdlXCIgXCJuYXJjb3RpY3NcIiAgICAgICBcInByb3N0aXR1dGlvblwiICAgIFwicm9iYmVyeVwiICAgICAgICBcbls1XSBcInRoZWZ0XCIgICAgICAgICAgXG4ifQ== -->
 <pre><code>[1] &quot;criminal_damage&quot; &quot;narcotics&quot;       &quot;prostitution&quot;    &quot;robbery&quot;        
 [5] &quot;theft&quot;          </code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjpbImNyaW1pbmFsX2RhbWFnZVxuIiwibmFyY290aWNzXG4iLCJwcm9zdGl0dXRpb25cbiIsInJvYmJlcnlcbiIsInRoZWZ0XG4iXX0= -->
+<pre><code>criminal_damage
+
+narcotics
+
+prostitution
+
+robbery
+
+theft</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Make sure that your predictions are either <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code> or <code>5</code>. Here are some packages you might need:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaWYgKCFyZXF1aXJlKFwibm5ldFwiKSkge1xuICBpbnN0YWxsLnBhY2thZ2VzKFwibm5ldFwiKVxufVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiaWYgKCFyZXF1aXJlKFwibm5ldFwiKSkge1xuICBpbnN0YWxsLnBhY2thZ2VzKFwibm5ldFwiKVxufSJ9 -->
 <pre class="r"><code>if (!require(&quot;nnet&quot;)) {
   install.packages(&quot;nnet&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBubmV0XG4ifQ== -->
+<!-- rnb-message-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBubmV0XG4ifQ== -->
 <pre><code>Loading required package: nnet</code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-message-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaWYgKCFyZXF1aXJlKFwiRk5OXCIpKSB7XG4gIGluc3RhbGwucGFja2FnZXMoXCJGTk5cIilcbn1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiaWYgKCFyZXF1aXJlKFwiRk5OXCIpKSB7XG4gIGluc3RhbGwucGFja2FnZXMoXCJGTk5cIilcbn0ifQ== -->
 <pre class="r"><code>if (!require(&quot;FNN&quot;)) {
   install.packages(&quot;FNN&quot;)
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBGTk5cbiJ9 -->
+<!-- rnb-message-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBGTk5cbiJ9 -->
 <pre><code>Loading required package: FNN</code></pre>
-<!-- rnb-output-end -->
+<!-- rnb-message-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
@@ -284,7 +297,7 @@ cols(
 <p>I know that there are too many groups of the location variable to consider all of them at once, so I’ll lump them together into the top</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JpbWVzJGxvY2F0aW9uX2dycCA8LSBmb3JjYXRzOjpmY3RfbHVtcChmYWN0b3IoY3JpbWVzJGxvY2F0aW9uKSwgbiA9IDIwKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiY3JpbWVzJGxvY2F0aW9uX2dycCA8LSBmb3JjYXRzOjpmY3RfbHVtcChmYWN0b3IoY3JpbWVzJGxvY2F0aW9uKSwgbiA9IDIwKSJ9 -->
 <pre class="r"><code>crimes$location_grp &lt;- forcats::fct_lump(factor(crimes$location), n = 20)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -292,7 +305,7 @@ cols(
 <p>Now, I’ll fit a multinomial model on all of the data:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShubmV0KVxubW9kZWwgPC0gbXVsdGlub20oY3JpbWVfdHlwZSB+IGZhY3Rvcih5ZWFyKSArIGZhY3Rvcihob3VyKSArIGZhY3Rvcihtb250aCkgK1xuICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBwb2x5KGxvbmdpdHVkZSwgbGF0aXR1ZGUsIGRlZ3JlZSA9IDQpLFxuICAgICAgICAgICAgICAgICAgZGF0YSA9IGNyaW1lcyxcbiAgICAgICAgICAgICAgICAgIHN1YnNldCA9IChjcmltZXMkdHJhaW5faWQgPT0gXCJ0cmFpblwiKSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkobm5ldCkiLCJtb2RlbCA8LSBtdWx0aW5vbShjcmltZV90eXBlIH4gZmFjdG9yKHllYXIpICsgZmFjdG9yKGhvdXIpICsgZmFjdG9yKG1vbnRoKSArXG4gICAgICAgICAgICAgICAgICAgIGxvY2F0aW9uX2dycCArIHBvbHkobG9uZ2l0dWRlLCBsYXRpdHVkZSwgZGVncmVlID0gNCksXG4gICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzLFxuICAgICAgICAgICAgICAgICAgc3Vic2V0ID0gKGNyaW1lcyR0cmFpbl9pZCA9PSBcInRyYWluXCIpKSJdfQ== -->
 <pre class="r"><code>library(nnet)
 model &lt;- multinom(crime_type ~ factor(year) + factor(hour) + factor(month) +
                     location_grp + poly(longitude, latitude, degree = 4),
@@ -315,6 +328,26 @@ iter 100 value 37476.515063
 final  value 37476.515063 
 stopped after 100 iterations</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjpbImNyaW1lcyRjcmltZV90eXBlX3ByZWQgPC0gcHJlZGljdChtb2RlbCwgbmV3ZGF0YSA9IGNyaW1lcykiLCJ0YXBwbHkoY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA9PSBjcmltZXMkY3JpbWVfdHlwZSwgY3JpbWVzJHRyYWluX2lkLCBtZWFuKSJdfQ== -->
+<pre class="r"><code>crimes$crime_type_pred &lt;- predict(model, newdata = crimes)
+tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICB0ZXN0ICAgICB0cmFpbiAgICAgdmFsaWQgXG4gICAgICAgTkEgMC40ODE1NjY3IDAuNDcyNTAwMCBcbiJ9 -->
+<pre><code>     test     train     valid 
+       NA 0.4815667 0.4725000 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoidGFibGUoeSA9IGNyaW1lcyRjcmltZV90eXBlLCBwcmVkID0gY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCkifQ== -->
+<pre class="r"><code>table(y = crimes$crime_type, pred = crimes$crime_type_pred)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgcHJlZFxueSAgICAgIDEgICAgMiAgICAzICAgIDQgICAgNVxuICAxIDMyMzMgIDY2NCAxNzA4ICA3MjMgMTYzOVxuICAyICA3MjAgMzMyMSAxNzI2IDEzODYgIDg2OFxuICAzICAzMTAgIDgxMCA2MDQwICA2MzEgIDI0MVxuICA0ICA3MTAgMTY5MyAxMzc2IDI4OTggMTMyNFxuICA1IDE1NDYgIDY0MCAxMzU4ICA3NTUgMzY4MFxuIn0= -->
+<pre><code>   pred
+y      1    2    3    4    5
+  1 3233  664 1708  723 1639
+  2  720 3321 1726 1386  868
+  3  310  810 6040  631  241
+  4  710 1693 1376 2898 1324
+  5 1546  640 1358  755 3680</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Currently, I am classifying just under half of the crimes correctly.</p>
@@ -324,7 +357,7 @@ stopped after 100 iterations</code></pre>
 <p>Now, what if I use the same data to fit a local model? I won’t include polynomial terms and will treat everything other than location group as a numeric variable:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWCA8LSBtb2RlbC5tYXRyaXgofiAtMSArIHllYXIgKyBob3VyICsgbW9udGggK1xuICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBsb25naXR1ZGUgKyBsYXRpdHVkZSxcbiAgICAgICAgICAgICAgICAgIGRhdGEgPSBjcmltZXMpXG5YIDwtIHNjYWxlKFgpXG55IDwtIGNyaW1lcyRjcmltZV90eXBlXG5YX3RyYWluIDwtIFhbY3JpbWVzJHRyYWluX2lkID09IFwidHJhaW5cIixdXG55X3RyYWluIDwtIHlbY3JpbWVzJHRyYWluX2lkID09IFwidHJhaW5cIl1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjpbIlggPC0gbW9kZWwubWF0cml4KH4gLTEgKyB5ZWFyICsgaG91ciArIG1vbnRoICtcbiAgICAgICAgICAgICAgICAgICAgbG9jYXRpb25fZ3JwICsgbG9uZ2l0dWRlICsgbGF0aXR1ZGUsXG4gICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzKSIsIlggPC0gc2NhbGUoWCkiLCJ5IDwtIGNyaW1lcyRjcmltZV90eXBlIiwiWF90cmFpbiA8LSBYW2NyaW1lcyR0cmFpbl9pZCA9PSBcInRyYWluXCIsXSIsInlfdHJhaW4gPC0geVtjcmltZXMkdHJhaW5faWQgPT0gXCJ0cmFpblwiXSJdfQ== -->
 <pre class="r"><code>X &lt;- model.matrix(~ -1 + year + hour + month +
                     location_grp + longitude + latitude,
                   data = crimes)
@@ -338,16 +371,20 @@ y_train &lt;- y[crimes$train_id == &quot;train&quot;]</code></pre>
 <p>And then try a few different values of k in the knn model:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShGTk4pXG5mb3IgKGsgaW4gYygxMCwgNTAsIDEwMCkpIHtcbiAgY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA8LSBrbm4oWF90cmFpbiwgWCwgY2wgPSB5X3RyYWluLCBrID0gaylcbiAgcHJpbnQodGFwcGx5KGNyaW1lcyRjcmltZV90eXBlX3ByZWQgPT0gY3JpbWVzJGNyaW1lX3R5cGUsIGNyaW1lcyR0cmFpbl9pZCwgbWVhbikpXG59XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjpbImxpYnJhcnkoRk5OKSIsImZvciAoayBpbiBjKDEwLCA1MCwgMTAwKSkge1xuICBjcmltZXMkY3JpbWVfdHlwZV9wcmVkIDwtIGtubihYX3RyYWluLCBYLCBjbCA9IHlfdHJhaW4sIGsgPSBrKVxuICBwcmludCh0YXBwbHkoY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA9PSBjcmltZXMkY3JpbWVfdHlwZSwgY3JpbWVzJHRyYWluX2lkLCBtZWFuKSlcbn0iXX0= -->
 <pre class="r"><code>library(FNN)
 for (k in c(10, 50, 100)) {
   crimes$crime_type_pred &lt;- knn(X_train, X, cl = y_train, k = k)
   print(tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean))
 }</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICB0ZXN0ICB0cmFpbiAgdmFsaWQgXG4gICAgTkEgMC41MTg0IDAuNDA1OCBcbiJ9 -->
+<!-- rnb-output-begin eyJkYXRhIjoiICB0ZXN0ICB0cmFpbiAgdmFsaWQgXG4gICAgTkEgMC41NjU4IDAuNDU3OSBcbiAgdGVzdCAgdHJhaW4gIHZhbGlkIFxuICAgIE5BIDAuNDk2OCAwLjQ2ODEgXG4gIHRlc3QgIHRyYWluICB2YWxpZCBcbiAgICBOQSAwLjQ4MDUgMC40NjcyIFxuIn0= -->
 <pre><code>  test  train  valid 
-    NA 0.5184 0.4058 </code></pre>
+    NA 0.5658 0.4579 
+  test  train  valid 
+    NA 0.4968 0.4681 
+  test  train  valid 
+    NA 0.4805 0.4672 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -358,7 +395,7 @@ for (k in c(10, 50, 100)) {
 <p>Finally, I’ll try to blend these models together. This is slightly harder than in regression or binary classification case. First, we store the multinomial classifications:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9kZWwgPC0gbXVsdGlub20oY3JpbWVfdHlwZSB+IGZhY3Rvcih5ZWFyKSArIGZhY3Rvcihob3VyKSArIGZhY3Rvcihtb250aCkgK1xuICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBwb2x5KGxvbmdpdHVkZSwgbGF0aXR1ZGUsIGRlZ3JlZSA9IDQpLFxuICAgICAgICAgICAgICAgICAgZGF0YSA9IGNyaW1lcyxcbiAgICAgICAgICAgICAgICAgIHN1YnNldCA9IChjcmltZXMkdHJhaW5faWQgPT0gXCJ0cmFpblwiKSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoibW9kZWwgPC0gbXVsdGlub20oY3JpbWVfdHlwZSB+IGZhY3Rvcih5ZWFyKSArIGZhY3Rvcihob3VyKSArIGZhY3Rvcihtb250aCkgK1xuICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBwb2x5KGxvbmdpdHVkZSwgbGF0aXR1ZGUsIGRlZ3JlZSA9IDQpLFxuICAgICAgICAgICAgICAgICAgZGF0YSA9IGNyaW1lcyxcbiAgICAgICAgICAgICAgICAgIHN1YnNldCA9IChjcmltZXMkdHJhaW5faWQgPT0gXCJ0cmFpblwiKSkifQ== -->
 <pre class="r"><code>model &lt;- multinom(crime_type ~ factor(year) + factor(hour) + factor(month) +
                     location_grp + poly(longitude, latitude, degree = 4),
                   data = crimes,
@@ -380,7 +417,7 @@ iter 100 value 37476.515063
 final  value 37476.515063 
 stopped after 100 iterations</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JpbWVzJG11bHRpbm9taWFsX3ByZWQgPC0gcHJlZGljdChtb2RlbCwgbmV3ZGF0YSA9IGNyaW1lcylcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiY3JpbWVzJG11bHRpbm9taWFsX3ByZWQgPC0gcHJlZGljdChtb2RlbCwgbmV3ZGF0YSA9IGNyaW1lcykifQ== -->
 <pre class="r"><code>crimes$multinomial_pred &lt;- predict(model, newdata = crimes)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
@@ -388,7 +425,7 @@ stopped after 100 iterations</code></pre>
 <p>The knn prediction will only yield the probabilities for the highest class:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWCA8LSBtb2RlbC5tYXRyaXgofiAtMSArIHllYXIgKyBob3VyICsgbW9udGggK1xuICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBsb25naXR1ZGUgKyBsYXRpdHVkZSxcbiAgICAgICAgICAgICAgICAgIGRhdGEgPSBjcmltZXMpXG5YIDwtIHNjYWxlKFgpXG55IDwtIGNyaW1lcyRjcmltZV90eXBlXG5YX3RyYWluIDwtIFhbY3JpbWVzJHRyYWluX2lkID09IFwidHJhaW5cIixdXG55X3RyYWluIDwtIHlbY3JpbWVzJHRyYWluX2lkID09IFwidHJhaW5cIl1cbmtubl9wcmVkIDwtIGtubihYX3RyYWluLCBYLCBjbCA9IHlfdHJhaW4sIGsgPSA1MCwgcHJvYiA9IFRSVUUpXG5wcm9iIDwtIGF0dHJpYnV0ZXMoa25uX3ByZWQpJHByb2JcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjpbIlggPC0gbW9kZWwubWF0cml4KH4gLTEgKyB5ZWFyICsgaG91ciArIG1vbnRoICtcbiAgICAgICAgICAgICAgICAgICAgbG9jYXRpb25fZ3JwICsgbG9uZ2l0dWRlICsgbGF0aXR1ZGUsXG4gICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzKSIsIlggPC0gc2NhbGUoWCkiLCJ5IDwtIGNyaW1lcyRjcmltZV90eXBlIiwiWF90cmFpbiA8LSBYW2NyaW1lcyR0cmFpbl9pZCA9PSBcInRyYWluXCIsXSIsInlfdHJhaW4gPC0geVtjcmltZXMkdHJhaW5faWQgPT0gXCJ0cmFpblwiXSIsIiIsImtubl9wcmVkIDwtIGtubihYX3RyYWluLCBYLCBjbCA9IHlfdHJhaW4sIGsgPSA1MCwgcHJvYiA9IFRSVUUpIiwicHJvYiA8LSBhdHRyaWJ1dGVzKGtubl9wcmVkKSRwcm9iIl19 -->
 <pre class="r"><code>X &lt;- model.matrix(~ -1 + year + hour + month +
                     location_grp + longitude + latitude,
                   data = crimes)
@@ -396,6 +433,7 @@ X &lt;- scale(X)
 y &lt;- crimes$crime_type
 X_train &lt;- X[crimes$train_id == &quot;train&quot;,]
 y_train &lt;- y[crimes$train_id == &quot;train&quot;]
+
 knn_pred &lt;- knn(X_train, X, cl = y_train, k = 50, prob = TRUE)
 prob &lt;- attributes(knn_pred)$prob</code></pre>
 <!-- rnb-source-end -->
@@ -404,7 +442,7 @@ prob &lt;- attributes(knn_pred)$prob</code></pre>
 <p>Now, I’ll switch to the knn prediction when it is very high:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA8LSBjcmltZXMkbXVsdGlub21pYWxfcHJlZFxuY3JpbWVzJGNyaW1lX3R5cGVfcHJlZFtwcm9iID4gMC40XSA8LSBrbm5fcHJlZFtwcm9iID4gMC40XVxudGFwcGx5KGNyaW1lcyRjcmltZV90eXBlX3ByZWQgPT0gY3JpbWVzJGNyaW1lX3R5cGUsIGNyaW1lcyR0cmFpbl9pZCwgbWVhbilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjpbImNyaW1lcyRjcmltZV90eXBlX3ByZWQgPC0gY3JpbWVzJG11bHRpbm9taWFsX3ByZWQiLCJjcmltZXMkY3JpbWVfdHlwZV9wcmVkW3Byb2IgPiAwLjRdIDwtIGtubl9wcmVkW3Byb2IgPiAwLjRdIiwidGFwcGx5KGNyaW1lcyRjcmltZV90eXBlX3ByZWQgPT0gY3JpbWVzJGNyaW1lX3R5cGUsIGNyaW1lcyR0cmFpbl9pZCwgbWVhbikiXX0= -->
 <pre class="r"><code>crimes$crime_type_pred &lt;- crimes$multinomial_pred
 crimes$crime_type_pred[prob &gt; 0.4] &lt;- knn_pred[prob &gt; 0.4]
 tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean)</code></pre>
@@ -423,7 +461,7 @@ tapply(crimes$crime_type_pred == crimes$crime_type, crimes$train_id, mean)</code
 <p>The code below assumes that you have added a prediction named <code>crime_type_pred</code> to every row of the dataset.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VibWl0IDwtIHNlbGVjdChjcmltZXMsIG9ic19pZCwgY3JpbWVfdHlwZV9wcmVkKVxud3JpdGVfY3N2KHN1Ym1pdCwgXCJjbGFzczA4X3N1Ym1pdC5jc3ZcIilcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjpbInN1Ym1pdCA8LSBzZWxlY3QoY3JpbWVzLCBvYnNfaWQsIGNyaW1lX3R5cGVfcHJlZCkiLCJ3cml0ZV9jc3Yoc3VibWl0LCBcImNsYXNzMDhfc3VibWl0LmNzdlwiKSJdfQ== -->
 <pre class="r"><code>submit &lt;- select(crimes, obs_id, crime_type_pred)
 write_csv(submit, &quot;class08_submit.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
@@ -433,7 +471,7 @@ write_csv(submit, &quot;class08_submit.csv&quot;)</code></pre>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTGFiIDA4IgphdXRob3I6ICIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KClRoZSBmb3JtYXQgb2YgdGhpcyBsYWIgZm9sbG93cyB0aGUgc2FtZSBmb3JtYXQgYXMgdGhlIHByZXZpb3VzCm9uZXMuIFlvdXIgZ29hbCBpcyB0byBwcmVkaWN0IHRoZSB2YWx1ZSBvZiB0aGUgdGhpcmQgY29sdW1uCih3aGljaCB3aWxsIGJlIG1pc3Npbmcgb24gdGhlIHRlc3Qgc2V0KSB1c2luZyB0aGUgdGVjaG5pcXVlcwp3ZSBoYXZlIGxlYXJuZWQgc28gZmFyLgoKIyBTZXQgdXAKClJlYWQgaW4gdGhlIGZvbGxvd2luZyBsaWJyYXJpZXMgYW5kIHRvIGxvYWQgdGhlIGNyaW1lcyBkYXRhc2V0OgoKYGBge3J9CmxpYnJhcnkocmVhZHIpCmxpYnJhcnkoZHBseXIpCmxpYnJhcnkoZ2dwbG90MikKbGlicmFyeSh2aXJpZGlzKQoKY3JpbWVzIDwtIHJlYWRfY3N2KCJodHRwczovL3N0YXRzbWF0aHMuZ2l0aHViLmlvL21sX2RhdGEvY2hpX2NyaW1lc181LmNzdiIpCmNyaW1lcyA8LSByZWFkX2Nzdigifi9naC9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3YiKQpgYGAKClRoZSBuYW1lcyBvZiB0aGUgY3JpbWVzIGFyZSwgaW4gb3JkZXI6CgpgYGB7cn0KYygiY3JpbWluYWxfZGFtYWdlIiwgIm5hcmNvdGljcyIsICJwcm9zdGl0dXRpb24iLCAicm9iYmVyeSIsICJ0aGVmdCIpCmBgYAoKTWFrZSBzdXJlIHRoYXQgeW91ciBwcmVkaWN0aW9ucyBhcmUgZWl0aGVyIGAxYCwgYDJgLCBgM2AsIGA0YCBvciBgNWAuCkhlcmUgYXJlIHNvbWUgcGFja2FnZXMgeW91IG1pZ2h0IG5lZWQ6CgpgYGB7cn0KaWYgKCFyZXF1aXJlKCJubmV0IikpIHsKICBpbnN0YWxsLnBhY2thZ2VzKCJubmV0IikKfQpgYGAKCmBgYHtyfQppZiAoIXJlcXVpcmUoIkZOTiIpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiRk5OIikKfQpgYGAKCiMgTGFiIDA4CgojIyMgTXVsdGlub21pYWwgY2xhc3NpZmljYXRpb24KCkkga25vdyB0aGF0IHRoZXJlIGFyZSB0b28gbWFueSBncm91cHMgb2YgdGhlIGxvY2F0aW9uIHZhcmlhYmxlCnRvIGNvbnNpZGVyIGFsbCBvZiB0aGVtIGF0IG9uY2UsIHNvIEknbGwgbHVtcCB0aGVtIHRvZ2V0aGVyIGludG8KdGhlIHRvcCAKCmBgYHtyfQpjcmltZXMkbG9jYXRpb25fZ3JwIDwtIGZvcmNhdHM6OmZjdF9sdW1wKGZhY3RvcihjcmltZXMkbG9jYXRpb24pLCBuID0gMjApCmBgYAoKTm93LCBJJ2xsIGZpdCBhIG11bHRpbm9taWFsIG1vZGVsIG9uIGFsbCBvZiB0aGUgZGF0YToKCmBgYHtyfQpsaWJyYXJ5KG5uZXQpCm1vZGVsIDwtIG11bHRpbm9tKGNyaW1lX3R5cGUgfiBmYWN0b3IoeWVhcikgKyBmYWN0b3IoaG91cikgKyBmYWN0b3IobW9udGgpICsKICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBwb2x5KGxvbmdpdHVkZSwgbGF0aXR1ZGUsIGRlZ3JlZSA9IDQpLAogICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzLAogICAgICAgICAgICAgICAgICBzdWJzZXQgPSAoY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiIpKQpjcmltZXMkY3JpbWVfdHlwZV9wcmVkIDwtIHByZWRpY3QobW9kZWwsIG5ld2RhdGEgPSBjcmltZXMpCnRhcHBseShjcmltZXMkY3JpbWVfdHlwZV9wcmVkID09IGNyaW1lcyRjcmltZV90eXBlLCBjcmltZXMkdHJhaW5faWQsIG1lYW4pCnRhYmxlKHkgPSBjcmltZXMkY3JpbWVfdHlwZSwgcHJlZCA9IGNyaW1lcyRjcmltZV90eXBlX3ByZWQpCmBgYAoKQ3VycmVudGx5LCBJIGFtIGNsYXNzaWZ5aW5nIGp1c3QgdW5kZXIgaGFsZiBvZiB0aGUgY3JpbWVzIGNvcnJlY3RseS4KCiMjIyBrbm4gcmVncmVzc2lvbgoKTm93LCB3aGF0IGlmIEkgdXNlIHRoZSBzYW1lIGRhdGEgdG8gZml0IGEgbG9jYWwgbW9kZWw/IEkgd29uJ3QgaW5jbHVkZQpwb2x5bm9taWFsIHRlcm1zIGFuZCB3aWxsIHRyZWF0IGV2ZXJ5dGhpbmcgb3RoZXIgdGhhbiBsb2NhdGlvbiBncm91cAphcyBhIG51bWVyaWMgdmFyaWFibGU6CgpgYGB7cn0KWCA8LSBtb2RlbC5tYXRyaXgofiAtMSArIHllYXIgKyBob3VyICsgbW9udGggKwogICAgICAgICAgICAgICAgICAgIGxvY2F0aW9uX2dycCArIGxvbmdpdHVkZSArIGxhdGl0dWRlLAogICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzKQpYIDwtIHNjYWxlKFgpCnkgPC0gY3JpbWVzJGNyaW1lX3R5cGUKWF90cmFpbiA8LSBYW2NyaW1lcyR0cmFpbl9pZCA9PSAidHJhaW4iLF0KeV90cmFpbiA8LSB5W2NyaW1lcyR0cmFpbl9pZCA9PSAidHJhaW4iXQpgYGAKCkFuZCB0aGVuIHRyeSBhIGZldyBkaWZmZXJlbnQgdmFsdWVzIG9mIGsgaW4gdGhlIGtubiBtb2RlbDoKCmBgYHtyfQpsaWJyYXJ5KEZOTikKZm9yIChrIGluIGMoMTAsIDUwLCAxMDApKSB7CiAgY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA8LSBrbm4oWF90cmFpbiwgWCwgY2wgPSB5X3RyYWluLCBrID0gaykKICBwcmludCh0YXBwbHkoY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA9PSBjcmltZXMkY3JpbWVfdHlwZSwgY3JpbWVzJHRyYWluX2lkLCBtZWFuKSkKfQpgYGAKClRoaXMgaXMgbm90IHF1aXRlIGFzIGdvb2QgYXMgdGhlIGdsb2JhbCBtb2RlbCwgYnV0IGxpa2VseQpnaXZlcyBzb21lIHVzZWZ1bCBpbmZvcm1hdGlvbiBhYm91dCB0aGUgb3V0cHV0IHRoYXQgdGhlCmdsb2JhbCBvbmUgZG9lcyBub3QuCgojIyMgQmxlbmRpbmcgcHJlZGljdGlvbnMKCkZpbmFsbHksIEknbGwgdHJ5IHRvIGJsZW5kIHRoZXNlIG1vZGVscyB0b2dldGhlci4gVGhpcyBpcwpzbGlnaHRseSBoYXJkZXIgdGhhbiBpbiByZWdyZXNzaW9uIG9yIGJpbmFyeSBjbGFzc2lmaWNhdGlvbgpjYXNlLiBGaXJzdCwgd2Ugc3RvcmUgdGhlIG11bHRpbm9taWFsIGNsYXNzaWZpY2F0aW9uczoKCmBgYHtyfQptb2RlbCA8LSBtdWx0aW5vbShjcmltZV90eXBlIH4gZmFjdG9yKHllYXIpICsgZmFjdG9yKGhvdXIpICsgZmFjdG9yKG1vbnRoKSArCiAgICAgICAgICAgICAgICAgICAgbG9jYXRpb25fZ3JwICsgcG9seShsb25naXR1ZGUsIGxhdGl0dWRlLCBkZWdyZWUgPSA0KSwKICAgICAgICAgICAgICAgICAgZGF0YSA9IGNyaW1lcywKICAgICAgICAgICAgICAgICAgc3Vic2V0ID0gKGNyaW1lcyR0cmFpbl9pZCA9PSAidHJhaW4iKSkKY3JpbWVzJG11bHRpbm9taWFsX3ByZWQgPC0gcHJlZGljdChtb2RlbCwgbmV3ZGF0YSA9IGNyaW1lcykKYGBgCgpUaGUga25uIHByZWRpY3Rpb24gd2lsbCBvbmx5IHlpZWxkIHRoZSBwcm9iYWJpbGl0aWVzIGZvciB0aGUKaGlnaGVzdCBjbGFzczoKCmBgYHtyfQpYIDwtIG1vZGVsLm1hdHJpeCh+IC0xICsgeWVhciArIGhvdXIgKyBtb250aCArCiAgICAgICAgICAgICAgICAgICAgbG9jYXRpb25fZ3JwICsgbG9uZ2l0dWRlICsgbGF0aXR1ZGUsCiAgICAgICAgICAgICAgICAgIGRhdGEgPSBjcmltZXMpClggPC0gc2NhbGUoWCkKeSA8LSBjcmltZXMkY3JpbWVfdHlwZQpYX3RyYWluIDwtIFhbY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiIsXQp5X3RyYWluIDwtIHlbY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiJdCgprbm5fcHJlZCA8LSBrbm4oWF90cmFpbiwgWCwgY2wgPSB5X3RyYWluLCBrID0gNTAsIHByb2IgPSBUUlVFKQpwcm9iIDwtIGF0dHJpYnV0ZXMoa25uX3ByZWQpJHByb2IKYGBgCgpOb3csIEknbGwgc3dpdGNoIHRvIHRoZSBrbm4gcHJlZGljdGlvbiB3aGVuIGl0IGlzIHZlcnkgaGlnaDoKCmBgYHtyfQpjcmltZXMkY3JpbWVfdHlwZV9wcmVkIDwtIGNyaW1lcyRtdWx0aW5vbWlhbF9wcmVkCmNyaW1lcyRjcmltZV90eXBlX3ByZWRbcHJvYiA+IDAuNF0gPC0ga25uX3ByZWRbcHJvYiA+IDAuNF0KdGFwcGx5KGNyaW1lcyRjcmltZV90eXBlX3ByZWQgPT0gY3JpbWVzJGNyaW1lX3R5cGUsIGNyaW1lcyR0cmFpbl9pZCwgbWVhbikKYGBgCgpUaGlzIGlzIGltcHJvdmVzIG9ubHkKCiMgU3VibWlzc2lvbgoKVGhlIGNvZGUgYmVsb3cgYXNzdW1lcyB0aGF0IHlvdSBoYXZlIGFkZGVkIGEgcHJlZGljdGlvbiBuYW1lZApgY3JpbWVfdHlwZV9wcmVkYCB0byBldmVyeSByb3cgb2YgdGhlIGRhdGFzZXQuCgpgYGB7cn0Kc3VibWl0IDwtIHNlbGVjdChjcmltZXMsIG9ic19pZCwgY3JpbWVfdHlwZV9wcmVkKQp3cml0ZV9jc3Yoc3VibWl0LCAiY2xhc3MwOF9zdWJtaXQuY3N2IikKYGBgCgpOb3csIHVwbG9hZCB0aGlzIGZpbGUgKGVuZHMgd2l0aCAiLlJtZCIpLCB0aGUgSFRNTCBvdXRwdXQKKGVuZHMgd2l0aCAiLm5iLmh0bWwiIG9yICIuaHRtbCIpLCBhbmQgdGhlIGNzdiBmaWxlIHRvCkdpdEh1Yi4K</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTGFiIDA4IgphdXRob3I6ICIiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KClRoZSBmb3JtYXQgb2YgdGhpcyBsYWIgZm9sbG93cyB0aGUgc2FtZSBmb3JtYXQgYXMgdGhlIHByZXZpb3VzCm9uZXMuIFlvdXIgZ29hbCBpcyB0byBwcmVkaWN0IHRoZSB2YWx1ZSBvZiB0aGUgdGhpcmQgY29sdW1uCih3aGljaCB3aWxsIGJlIG1pc3Npbmcgb24gdGhlIHRlc3Qgc2V0KSB1c2luZyB0aGUgdGVjaG5pcXVlcwp3ZSBoYXZlIGxlYXJuZWQgc28gZmFyLgoKIyBTZXQgdXAKClJlYWQgaW4gdGhlIGZvbGxvd2luZyBsaWJyYXJpZXMgYW5kIHRvIGxvYWQgdGhlIGNyaW1lcyBkYXRhc2V0OgoKYGBge3J9CmxpYnJhcnkocmVhZHIpCmxpYnJhcnkoZHBseXIpCmxpYnJhcnkoZ2dwbG90MikKbGlicmFyeSh2aXJpZGlzKQoKY3JpbWVzIDwtIHJlYWRfY3N2KCJodHRwczovL3N0YXRzbWF0aHMuZ2l0aHViLmlvL21sX2RhdGEvY2hpX2NyaW1lc181LmNzdiIpCmNyaW1lcyA8LSByZWFkX2Nzdigifi9naC9tbF9kYXRhL2NoaV9jcmltZXNfNS5jc3YiKQpgYGAKClRoZSBuYW1lcyBvZiB0aGUgY3JpbWVzIGFyZSwgaW4gb3JkZXI6CgpgYGB7cn0KYygiY3JpbWluYWxfZGFtYWdlIiwgIm5hcmNvdGljcyIsICJwcm9zdGl0dXRpb24iLCAicm9iYmVyeSIsICJ0aGVmdCIpCmBgYAoKTWFrZSBzdXJlIHRoYXQgeW91ciBwcmVkaWN0aW9ucyBhcmUgZWl0aGVyIGAxYCwgYDJgLCBgM2AsIGA0YCBvciBgNWAuCkhlcmUgYXJlIHNvbWUgcGFja2FnZXMgeW91IG1pZ2h0IG5lZWQ6CgpgYGB7cn0KaWYgKCFyZXF1aXJlKCJubmV0IikpIHsKICBpbnN0YWxsLnBhY2thZ2VzKCJubmV0IikKfQpgYGAKCmBgYHtyfQppZiAoIXJlcXVpcmUoIkZOTiIpKSB7CiAgaW5zdGFsbC5wYWNrYWdlcygiRk5OIikKfQpgYGAKCiMgTGFiIDA4CgojIyMgTXVsdGlub21pYWwgY2xhc3NpZmljYXRpb24KCkkga25vdyB0aGF0IHRoZXJlIGFyZSB0b28gbWFueSBncm91cHMgb2YgdGhlIGxvY2F0aW9uIHZhcmlhYmxlCnRvIGNvbnNpZGVyIGFsbCBvZiB0aGVtIGF0IG9uY2UsIHNvIEknbGwgbHVtcCB0aGVtIHRvZ2V0aGVyIGludG8KdGhlIHRvcAoKYGBge3J9CmNyaW1lcyRsb2NhdGlvbl9ncnAgPC0gZm9yY2F0czo6ZmN0X2x1bXAoZmFjdG9yKGNyaW1lcyRsb2NhdGlvbiksIG4gPSAyMCkKYGBgCgpOb3csIEknbGwgZml0IGEgbXVsdGlub21pYWwgbW9kZWwgb24gYWxsIG9mIHRoZSBkYXRhOgoKYGBge3J9CmxpYnJhcnkobm5ldCkKbW9kZWwgPC0gbXVsdGlub20oY3JpbWVfdHlwZSB+IGZhY3Rvcih5ZWFyKSArIGZhY3Rvcihob3VyKSArIGZhY3Rvcihtb250aCkgKwogICAgICAgICAgICAgICAgICAgIGxvY2F0aW9uX2dycCArIHBvbHkobG9uZ2l0dWRlLCBsYXRpdHVkZSwgZGVncmVlID0gNCksCiAgICAgICAgICAgICAgICAgIGRhdGEgPSBjcmltZXMsCiAgICAgICAgICAgICAgICAgIHN1YnNldCA9IChjcmltZXMkdHJhaW5faWQgPT0gInRyYWluIikpCmNyaW1lcyRjcmltZV90eXBlX3ByZWQgPC0gcHJlZGljdChtb2RlbCwgbmV3ZGF0YSA9IGNyaW1lcykKdGFwcGx5KGNyaW1lcyRjcmltZV90eXBlX3ByZWQgPT0gY3JpbWVzJGNyaW1lX3R5cGUsIGNyaW1lcyR0cmFpbl9pZCwgbWVhbikKdGFibGUoeSA9IGNyaW1lcyRjcmltZV90eXBlLCBwcmVkID0gY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCkKYGBgCgpDdXJyZW50bHksIEkgYW0gY2xhc3NpZnlpbmcganVzdCB1bmRlciBoYWxmIG9mIHRoZSBjcmltZXMgY29ycmVjdGx5LgoKIyMjIGtubiByZWdyZXNzaW9uCgpOb3csIHdoYXQgaWYgSSB1c2UgdGhlIHNhbWUgZGF0YSB0byBmaXQgYSBsb2NhbCBtb2RlbD8gSSB3b24ndCBpbmNsdWRlCnBvbHlub21pYWwgdGVybXMgYW5kIHdpbGwgdHJlYXQgZXZlcnl0aGluZyBvdGhlciB0aGFuIGxvY2F0aW9uIGdyb3VwCmFzIGEgbnVtZXJpYyB2YXJpYWJsZToKCmBgYHtyfQpYIDwtIG1vZGVsLm1hdHJpeCh+IC0xICsgeWVhciArIGhvdXIgKyBtb250aCArCiAgICAgICAgICAgICAgICAgICAgbG9jYXRpb25fZ3JwICsgbG9uZ2l0dWRlICsgbGF0aXR1ZGUsCiAgICAgICAgICAgICAgICAgIGRhdGEgPSBjcmltZXMpClggPC0gc2NhbGUoWCkKeSA8LSBjcmltZXMkY3JpbWVfdHlwZQpYX3RyYWluIDwtIFhbY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiIsXQp5X3RyYWluIDwtIHlbY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiJdCmBgYAoKQW5kIHRoZW4gdHJ5IGEgZmV3IGRpZmZlcmVudCB2YWx1ZXMgb2YgayBpbiB0aGUga25uIG1vZGVsOgoKYGBge3J9CmxpYnJhcnkoRk5OKQpmb3IgKGsgaW4gYygxMCwgNTAsIDEwMCkpIHsKICBjcmltZXMkY3JpbWVfdHlwZV9wcmVkIDwtIGtubihYX3RyYWluLCBYLCBjbCA9IHlfdHJhaW4sIGsgPSBrKQogIHByaW50KHRhcHBseShjcmltZXMkY3JpbWVfdHlwZV9wcmVkID09IGNyaW1lcyRjcmltZV90eXBlLCBjcmltZXMkdHJhaW5faWQsIG1lYW4pKQp9CmBgYAoKVGhpcyBpcyBub3QgcXVpdGUgYXMgZ29vZCBhcyB0aGUgZ2xvYmFsIG1vZGVsLCBidXQgbGlrZWx5CmdpdmVzIHNvbWUgdXNlZnVsIGluZm9ybWF0aW9uIGFib3V0IHRoZSBvdXRwdXQgdGhhdCB0aGUKZ2xvYmFsIG9uZSBkb2VzIG5vdC4KCiMjIyBCbGVuZGluZyBwcmVkaWN0aW9ucwoKRmluYWxseSwgSSdsbCB0cnkgdG8gYmxlbmQgdGhlc2UgbW9kZWxzIHRvZ2V0aGVyLiBUaGlzIGlzCnNsaWdodGx5IGhhcmRlciB0aGFuIGluIHJlZ3Jlc3Npb24gb3IgYmluYXJ5IGNsYXNzaWZpY2F0aW9uCmNhc2UuIEZpcnN0LCB3ZSBzdG9yZSB0aGUgbXVsdGlub21pYWwgY2xhc3NpZmljYXRpb25zOgoKYGBge3J9Cm1vZGVsIDwtIG11bHRpbm9tKGNyaW1lX3R5cGUgfiBmYWN0b3IoeWVhcikgKyBmYWN0b3IoaG91cikgKyBmYWN0b3IobW9udGgpICsKICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBwb2x5KGxvbmdpdHVkZSwgbGF0aXR1ZGUsIGRlZ3JlZSA9IDQpLAogICAgICAgICAgICAgICAgICBkYXRhID0gY3JpbWVzLAogICAgICAgICAgICAgICAgICBzdWJzZXQgPSAoY3JpbWVzJHRyYWluX2lkID09ICJ0cmFpbiIpKQpjcmltZXMkbXVsdGlub21pYWxfcHJlZCA8LSBwcmVkaWN0KG1vZGVsLCBuZXdkYXRhID0gY3JpbWVzKQpgYGAKClRoZSBrbm4gcHJlZGljdGlvbiB3aWxsIG9ubHkgeWllbGQgdGhlIHByb2JhYmlsaXRpZXMgZm9yIHRoZQpoaWdoZXN0IGNsYXNzOgoKYGBge3J9ClggPC0gbW9kZWwubWF0cml4KH4gLTEgKyB5ZWFyICsgaG91ciArIG1vbnRoICsKICAgICAgICAgICAgICAgICAgICBsb2NhdGlvbl9ncnAgKyBsb25naXR1ZGUgKyBsYXRpdHVkZSwKICAgICAgICAgICAgICAgICAgZGF0YSA9IGNyaW1lcykKWCA8LSBzY2FsZShYKQp5IDwtIGNyaW1lcyRjcmltZV90eXBlClhfdHJhaW4gPC0gWFtjcmltZXMkdHJhaW5faWQgPT0gInRyYWluIixdCnlfdHJhaW4gPC0geVtjcmltZXMkdHJhaW5faWQgPT0gInRyYWluIl0KCmtubl9wcmVkIDwtIGtubihYX3RyYWluLCBYLCBjbCA9IHlfdHJhaW4sIGsgPSA1MCwgcHJvYiA9IFRSVUUpCnByb2IgPC0gYXR0cmlidXRlcyhrbm5fcHJlZCkkcHJvYgpgYGAKCk5vdywgSSdsbCBzd2l0Y2ggdG8gdGhlIGtubiBwcmVkaWN0aW9uIHdoZW4gaXQgaXMgdmVyeSBoaWdoOgoKYGBge3J9CmNyaW1lcyRjcmltZV90eXBlX3ByZWQgPC0gY3JpbWVzJG11bHRpbm9taWFsX3ByZWQKY3JpbWVzJGNyaW1lX3R5cGVfcHJlZFtwcm9iID4gMC40XSA8LSBrbm5fcHJlZFtwcm9iID4gMC40XQp0YXBwbHkoY3JpbWVzJGNyaW1lX3R5cGVfcHJlZCA9PSBjcmltZXMkY3JpbWVfdHlwZSwgY3JpbWVzJHRyYWluX2lkLCBtZWFuKQpgYGAKClRoaXMgaXMgaW1wcm92ZXMgb25seQoKIyBTdWJtaXNzaW9uCgpUaGUgY29kZSBiZWxvdyBhc3N1bWVzIHRoYXQgeW91IGhhdmUgYWRkZWQgYSBwcmVkaWN0aW9uIG5hbWVkCmBjcmltZV90eXBlX3ByZWRgIHRvIGV2ZXJ5IHJvdyBvZiB0aGUgZGF0YXNldC4KCmBgYHtyfQpzdWJtaXQgPC0gc2VsZWN0KGNyaW1lcywgb2JzX2lkLCBjcmltZV90eXBlX3ByZWQpCndyaXRlX2NzdihzdWJtaXQsICJjbGFzczA4X3N1Ym1pdC5jc3YiKQpgYGAKCk5vdywgdXBsb2FkIHRoaXMgZmlsZSAoZW5kcyB3aXRoICIuUm1kIiksIHRoZSBIVE1MIG91dHB1dAooZW5kcyB3aXRoICIubmIuaHRtbCIgb3IgIi5odG1sIiksIGFuZCB0aGUgY3N2IGZpbGUgdG8KR2l0SHViLgo=</div>
 
 
 
