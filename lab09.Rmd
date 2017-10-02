@@ -1,0 +1,104 @@
+---
+title: "Lab 09"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the crimes dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+tract <- read_csv("https://statsmaths.github.io/ml_data/tract_median_income.csv")
+```
+
+This lab will be scored using RMSE.
+
+
+```{r}
+if (!require("glmnet")) {
+  install.packages("glmnet")
+}
+```
+
+# Lab 09
+
+## Model selection and LM
+
+Because it is the most recent thing we've learned, let's try to use the `cv.glmnet` function
+to help with model selection. Here, it suggests that the the income quartiles are most predictive,
+but also that housing costs are useful. This should probably not be surprising!
+
+```{r}
+library(glmnet)
+X <- model.matrix(~ . -1, data = tract[,10:70])
+y <- tract$median_income
+X_train <- X[tract$train_id == "train",]
+y_train <- y[tract$train_id == "train"]
+
+model <- cv.glmnet(X_train, y_train, alpha = 0.7)
+coef(model)
+```
+
+I suspect that I can get a very accurate model just using these five variables. Let's
+try to do this with the data:
+
+```{r}
+model <- lm(median_income ~ income_q1 + income_q2 + income_q3 + income_q4,
+            data = tract,
+            subset = (train_id == "train"))
+tract$median_income_pred_1 <- predict(model, newdata = tract)
+sqrt(tapply((tract$median_income_pred_1 - tract$median_income)^2, tract$train_id, mean))
+```
+
+Compared to the mean estimator, this is really great great
+
+```{r}
+sqrt(tapply((mean(tract$median_income, na.rm = TRUE) - tract$median_income)^2, tract$train_id, mean))
+```
+
+Though, as we would expect, it is not too hard to predict tract median income if we have the
+second and third income quartiles.
+
+Perhaps we could get a better model by just using the second and third quartiles. With these,
+there is also no danger of over-fitting:
+
+```{r}
+model <- lm(median_income ~ income_q2 + income_q3 - 1,
+            data = tract,
+            subset = (train_id == "train"))
+tract$median_income_pred_2 <- predict(model, newdata = tract)
+sqrt(tapply((tract$median_income_pred - tract$median_income)^2, tract$train_id, mean))
+```
+
+I am going to blend these two models together:
+
+```{r}
+tract$median_income_pred <- 0.9 * tract$median_income_pred_1 + 0.1 * tract$median_income_pred_2
+sqrt(tapply((tract$median_income_pred - tract$median_income)^2, tract$train_id, mean))
+```
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`median_income_pred` to every row of the dataset.
+
+```{r}
+submit <- select(tract, obs_id, median_income_pred)
+write_csv(submit, "class09_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
