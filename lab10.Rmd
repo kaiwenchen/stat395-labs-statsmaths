@@ -1,0 +1,132 @@
+---
+title: "Lab 10"
+author: ""
+output: html_notebook
+---
+
+The format of this lab follows the same format as the previous
+ones. Your goal is to predict the value of the third column
+(which will be missing on the test set) using the techniques
+we have learned so far.
+
+# Set up
+
+Read in the following libraries and to load the dataset:
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(viridis)
+
+flights <- read_csv("https://statsmaths.github.io/ml_data/flights.csv")
+```
+
+This lab will be scored using classification accuracy. Make
+sure your results are coded as either `0` or `1`.
+
+```{r}
+if (!require("xgboost")) {
+  install.packages("xgboost")
+}
+```
+
+# Lab 10
+
+My first step is to construct a model matrix. While not needed for the character
+vectors, I'll make explicit which variables are being treated as numeric and which
+are being treated as factors.
+
+```{r}
+X <- model.matrix(~ month + weekday + arr_hour + dep_hour +
+                    factor(origin) + factor(carrier) + factor(dest) +
+                    distance, data = flights)
+y <- flights$delayed
+
+X_train <- X[flights$train_id == "train",]
+X_valid <- X[flights$train_id == "valid",]
+y_train <- y[flights$train_id == "train"]
+y_valid <- y[flights$train_id == "valid"]
+```
+
+Then, I'll create xgboost training and validation sets:
+
+```{r}
+library(xgboost)
+data_train <- xgb.DMatrix(data = X_train, label = y_train)
+data_valid <- xgb.DMatrix(data = X_valid, label = y_valid)
+```
+
+And then fit the model.
+
+```{r}
+watchlist <- list(train=data_train, valid=data_valid)
+
+model <- xgb.train(data = data_train,
+                 max_depth = 4, eta = 0.5, nthread = 2,
+                 nrounds = 100, objective = "binary:logistic",
+                 watchlist = watchlist)
+```
+
+Why is the training error so different than the valid error?
+It turns out that the proportion of delayed flights is different
+in the training set and the validation set:
+
+```{r}
+table(flights$delayed_pred, flights$train_id_new)
+```
+
+Therefore, at this point, we are looking for relative changes
+rather than direct comparison between train and valid.
+
+It looks like the xgboost model is still improving. I can iterate
+it further by calling `xgb.train` again but providing the 
+old model to the option `xgb_model`. This starts the next
+iteration where the prior one left off.
+
+```{r}
+model <- xgb.train(data = data_train,
+                 max_depth = 4, eta = 0.2, nthread = 2,
+                 nrounds = 100, objective = "binary:logistic",
+                 watchlist = watchlist,
+                 xgb_model = model)
+```
+
+An importance matrix shows which variables were found to be the
+most useful.
+
+```{r}
+importance_matrix <- xgb.importance(model = model)
+importance_matrix[,1] <- colnames(X)[as.numeric(importance_matrix[[1]]) + 1]
+importance_matrix
+```
+
+Finally, I'll fit a glm model to the output on the validation set
+to try to figure out the right offset, and will blend it with the
+original gmt model:
+
+```{r}
+flights$gmt_pred <- predict(model, newdata = X)
+model_glm <- glm(delayed ~ gmt_pred,
+                 data = flights, 
+                 subset = (train_id == "valid"))
+flights$glm_pred <- predict(model_glm, newdata = flights, type = "response")
+flights$delayed_pred <- as.numeric(flights$gmt_pred + flights$glm_pred  > 1.00)
+tapply(flights$delayed_pred == flights$delayed, flights$train_id, mean)
+```
+
+
+
+# Submission
+
+The code below assumes that you have added a prediction named
+`delayed_pred` to every row of the dataset.
+
+```{r}
+submit <- select(flights, obs_id, delayed_pred)
+write_csv(submit, "class10_submit.csv")
+```
+
+Now, upload this file (ends with ".Rmd"), the HTML output
+(ends with ".nb.html" or ".html"), and the csv file to
+GitHub.
